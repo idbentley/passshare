@@ -1,0 +1,31 @@
+// ==UserScript==
+// @name          Passshare
+// @description   needed for passshare to store privatekey and generate publickey
+// @include       *
+// @require       https://raw.github.com/wwwtyro/cryptico/master/cryptico.min.js
+// @require       https://raw.github.com/douglascrockford/JSON-js/master/json2.js
+// @require       http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js
+// @grant GM_setValue
+// @grant GM_getValue
+// ==/UserScript==
+
+
+var rsakey = GM_getValue("rsakey", "nokey");
+console.log(rsakey);
+
+if(rsakey === "nokey"){
+        rsakey = cryptico.generateRSAKey("thispasswordalsosucks", 100);
+            GM_setValue("rsakey", JSON.stringify(rsakey));
+}else{
+        rsakey = JSON.parse(rsakey);
+}
+console.log("logged the bit");
+console.log(rsakey);
+
+var pubKey = cryptico.publicKeyString(rsakey);
+
+console.log(pubKey);
+
+$(function(){
+        $('#public-key').val(pubKey);
+});
