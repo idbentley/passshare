@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <input id='public-key' type='hidden' value='{{public_key}}' />
+{% endblock content %}
+{% block morescripts %}
+<script type='text/javascript'>
+    $(function(){
+        $('#public-key').on('change', function(){
+            console.log("Public key registered: ", $(this).val());
+        });
+    });
+</script>
+{% endblock morescripts %}
